@@ -35,10 +35,8 @@ class Register extends Component {
         await api.registerUser(data).then(res => {
             if(res.status === 200){
                 history.push('/gallery');
-            } else{
-                alert('There was a problem with registration');
             }
-        });
+        }).catch(err => alert('There was a problem with registration'));
     }
 
     render() {

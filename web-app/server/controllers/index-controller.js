@@ -41,7 +41,7 @@ module.exports = {
 
         // handle error of user login
         if(!user && error){
-            return res.status(404).json({
+            return res.status(400).json({
                 success: false,
                 message: 'Username or Password is incorrect'
             });

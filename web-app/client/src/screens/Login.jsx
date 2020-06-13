@@ -29,10 +29,8 @@ class Login extends Component {
         await api.loginUser(data).then(res => {
             if(res.status === 200){
                 history.push('/gallery');
-            } else{
-                alert('There was a problem with login');
             }
-        });
+        }).catch(err => alert('The username or password is incorrect'));
     }
 
     render() {
