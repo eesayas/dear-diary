@@ -45,12 +45,14 @@ function transcribe(event) {
         let tempBody = "";
         if (finalTranscript.includes("dear diary title")) {
             tempTitle += finalTranscript.slice(finalTranscript.lastIndexOf("dear diary title") + "dear diary title".length + 1);
+            console.log("title: " + tempTitle)
+            document.getElementById('title').innerHTML = tempTitle;
             if (tempTitle.includes("dear diary")) {
                 tempTitle = tempTitle.split("dear diary")[0];
                 data.title = tempTitle
                 finalTranscript = finalTranscript.replace("dear diary title", "")
             }
-            document.getElementById('title').innerHTML = tempTitle;
+            //document.getElementById('title').innerHTML = tempTitle;
         }
         if (finalTranscript.includes("dear diary body")) {
             tempBody += finalTranscript.slice(finalTranscript.lastIndexOf("dear diary body") + "dear diary body".length + 1);
@@ -61,9 +63,6 @@ function transcribe(event) {
             }
             document.getElementById('body').innerHTML = tempBody;
         }
-
-        document.getElementById("title").innerHTML = data.title;
-        document.getElementById("body").innerHTML = data.body;
 
         if (finalTranscript.includes("dear diary publish")) {
             finalTranscript = "";
