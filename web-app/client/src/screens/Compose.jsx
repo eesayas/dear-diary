@@ -21,12 +21,19 @@ class Compose extends Component {
     render() {
         return (
             <div>
-                <form>
-                    <textarea value={this.state.titleValue} onChange={this.handleChange} id="title" placeholder="title" />
-                    <textarea value={this.state.bodyValue} onChange={this.handleChange} id="body" placeholder="body" />
-                </form>
-                <button className="button" type="button">PUBLISH</button>
-                <button className="button" type="button" onClick={() => history.push("/gallery")}>CANCEL</button>
+                <div className="compose-body">
+                    <form className="form">
+                        <textarea value={this.state.titleValue} onChange={this.handleChange} id="title" placeholder='Say "Dear Diary, Write Title" to make your title...' />
+                        <textarea value={this.state.bodyValue} onChange={this.handleChange} id="body" placeholder='Say "Dear Diary, Write Body" to make your title...' />
+                        <div className="foot">
+                            <p>Say “Dear Diary, Publish” or “Dear Diary, Cancel”</p>
+                            <div className="button-group">
+                                <button className="publish-button" type="button">PUBLISH</button>
+                                <button className="cancel-button" type="button" onClick={() => history.push("/gallery")}>CANCEL</button>
+                            </div>
+                        </div>
+                    </form>
+                </div>
             </div>
         );
     }
