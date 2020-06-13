@@ -52,7 +52,7 @@ function transcribe(event) {
                 data.title = tempTitle
                 finalTranscript = finalTranscript.replace("dear diary title", "")
             }
-            //document.getElementById('title').innerHTML = tempTitle;
+            document.getElementById('title').innerHTML = tempTitle;
         }
         if (finalTranscript.includes("dear diary body")) {
             tempBody += finalTranscript.slice(finalTranscript.lastIndexOf("dear diary body") + "dear diary body".length + 1);
