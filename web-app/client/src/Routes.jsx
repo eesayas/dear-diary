@@ -2,6 +2,7 @@ import React, { Component } from 'react';
 import history from "./history";
 import App from "./App";
 import Gallery from "./components/Gallery";
+import Compose from "./components/Compose";
 import {
     Router,
     Switch,
@@ -15,6 +16,7 @@ class Routes extends Component {
                 <Switch>
                     <Route path="/" exact component={App} />
                     <Route path="/gallery" component={Gallery} />
+                    <Route path="/compose" component={Compose} />
                 </Switch>
             </Router>
         );
