@@ -1,6 +1,5 @@
 import React, { Component } from 'react';
-import Gallery from "./components/Gallery";
-import history from "./history";
+import history from "../history";
 
 class App extends Component {
   render() {
@@ -12,7 +11,6 @@ class App extends Component {
         <p>Get Started</p>
         <p>Say 'Dear Diary, Get Started’ to well...get started</p>
         <button type="button" onClick={() => history.push("/gallery")}>Get Started</button>
-        <div id="finalTranscript"></div>
       </div >
     );
   }

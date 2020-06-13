@@ -1,8 +1,8 @@
 import React, { Component } from 'react';
 import history from "./history";
-import App from "./App";
-import Gallery from "./components/Gallery";
-import Compose from "./components/Compose";
+import App from "./screens/App";
+import Gallery from "./screens/Gallery";
+import Compose from "./screens/Compose";
 import {
     Router,
     Switch,

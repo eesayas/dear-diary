@@ -36,7 +36,7 @@ function transcribe(event) {
             history.push("/gallery");
         }
     } else if (history.location.pathname === "/gallery") {
-        if (finalTranscript.includes("dear diary start")) {
+        if (finalTranscript.includes("dear diary compose")) {
             finalTranscript = "";
             history.push("/compose");
         }
@@ -46,13 +46,18 @@ function transcribe(event) {
         if (finalTranscript.includes("dear diary cancel")) {
             finalTranscript = "";
             history.push("/gallery");
-        } else if (finalTranscript.includes("dear diary title")) {
+        }
+        if (finalTranscript.includes("dear diary title")) {
             document.getElementById('title').innerHTML = finalTranscript;
-            tempTitle = finalTranscript;
-        } else if (finalTranscript.includes("dear diary body")) {
+            tempTitle += finalTranscript;
+            console.log("title :" + tempTitle)
+        }
+        if (finalTranscript.includes("dear diary body")) {
             document.getElementById('body').innerHTML = finalTranscript;
-            tempBody = finalTranscript;
-        } else if (finalTranscript.includes("dear diary publish")) {
+            tempBody += finalTranscript;
+            console.log("body: " + tempBody)
+        }
+        if (finalTranscript.includes("dear diary publish")) {
             finalTranscript = "";
             data.title = tempTitle;
             data.body = tempBody;

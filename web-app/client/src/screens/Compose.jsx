@@ -6,10 +6,10 @@ class Compose extends Component {
         return (
             <div>
                 <p>compose</p>
-                <div id="title"></div>
-                <div id="body"></div>
-            </div>)
-            ;
+                <p id="title"></p>
+                <p id="body"></p>
+            </div>
+        );
     }
 }
 
