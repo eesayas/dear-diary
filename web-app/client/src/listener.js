@@ -43,17 +43,17 @@ function transcribe(event) {
     } else if (history.location.pathname === "/compose") {
         let tempTitle = "";
         let tempBody = "";
+
         if (finalTranscript.includes("dear diary cancel")) {
             finalTranscript = "";
             history.push("/gallery");
         }
         if (finalTranscript.includes("dear diary title")) {
-            document.getElementById('title').innerHTML = finalTranscript;
-            tempTitle += finalTranscript;
+            tempTitle += finalTranscript.slice(finalTranscript.lastIndexOf("dear diary title") + "dear diary title".length);
             console.log("title :" + tempTitle)
+            document.getElementById('title').innerHTML = tempTitle;
         }
         if (finalTranscript.includes("dear diary body")) {
-            document.getElementById('body').innerHTML = finalTranscript;
             tempBody += finalTranscript;
             console.log("body: " + tempBody)
         }
