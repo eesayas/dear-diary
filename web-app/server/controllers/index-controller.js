@@ -11,17 +11,26 @@ module.exports = {
             //after registration automatically login the user
             req.login(user, error => {
                 if(error){ 
-                    console.log('Error on user sign up');
-                    return res.redirect('/login'); //if error redirect to login
-                }
+                    return res.status(400).json({
+                        success: false,
+                        message: 'User login was unsuccessful'
+                    });
+                
+                } else{
+                    return res.status(200).json({
+                        success: true,
+                        message: 'User login was successful'
+                    });
 
-                console.log('user is logged in');
-                // res.redirect('/posts'); 
+                    //NOTE: should handle redirection in client side
+                }
             });
         
         } catch(err) {
-            console.log('Error on user auto login');
-            // res.redirect('/register');
+            return res.status(401).json({
+                success: false,
+                message: 'User registration was unsuccessful'
+            });
         }
     },
 
@@ -32,24 +41,65 @@ module.exports = {
 
         // handle error of user login
         if(!user && error){
-            console.log('Error on manual login');
-            // return res.redirect('/login');
+            return res.status(404).json({
+                success: false,
+                message: 'Username or Password is incorrect'
+            });
         }
 
         //login user
         req.login(user, error => {
-            if(error) return res.redirect('/login');
-            console.log('user is logged in');
-            // res.redirect('/posts');
+            if(error){
+                return res.status(400).json({
+                    success: false,
+                    message: 'User login was unsuccessful'
+                });
+            } else{
+                return res.status(200).json({
+                    success: true,
+                    message: 'User login was successful'
+                });
+            }
         });
     },
 
     //this will get all the posts of user
     async fetchPosts(req, res){
-        const posts = req.user.posts;
-        return res.status(200).json({
-            success: true,
-            data: posts
+        await User.findById(req.user.id).populate('posts').exec((err, user) => {
+            if(err){
+                return res.status(400).json({
+                    success: false,
+                    message: `Was not able to fetch the posts of ${req.user}`
+                });
+            } else{
+                return res.status(200).json({
+                    success: true,
+                    message: `Fetching ${req.user}'s post successful`,
+                    data: user.posts
+                });
+            }
         });
+    },
+
+    //this will create the post and save it to the db
+    async createPost(req, res){
+        let user = await User.findById(req.user.id);
+        let post = await Post.create(req.body);
+
+        user.posts.push(post);
+        await user.save();
+
+        if(!post){
+            return res.status(400).json({
+                success: false,
+                message: 'Post Creation Unsuccessful.'
+            });
+        
+        } else{
+            return res.status(200).json({
+                success: true,
+                message: 'Post Creation Successful!'
+            })
+        }
     }
 }

@@ -6,6 +6,8 @@ const cors = require('cors');
 const mongoose = require('mongoose');
 const User = require('./models/user-model');
 
+mongoose.set('useCreateIndex', true); //avoid deprecation
+
 const app = express();
 const port = 3000;
 
