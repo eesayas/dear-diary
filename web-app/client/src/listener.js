@@ -43,25 +43,35 @@ function transcribe(event) {
     } else if (history.location.pathname === "/compose") {
         let tempTitle = "";
         let tempBody = "";
-
-        if (finalTranscript.includes("dear diary cancel")) {
-            finalTranscript = "";
-            history.push("/gallery");
-        }
         if (finalTranscript.includes("dear diary title")) {
-            tempTitle += finalTranscript.slice(finalTranscript.lastIndexOf("dear diary title") + "dear diary title".length);
-            console.log("title :" + tempTitle)
+            tempTitle += finalTranscript.slice(finalTranscript.lastIndexOf("dear diary title") + "dear diary title".length + 1);
+            if (tempTitle.includes("dear diary")) {
+                tempTitle = tempTitle.split("dear diary")[0];
+                data.title = tempTitle
+                finalTranscript = finalTranscript.replace("dear diary title", "")
+            }
             document.getElementById('title').innerHTML = tempTitle;
         }
         if (finalTranscript.includes("dear diary body")) {
-            tempBody += finalTranscript;
-            console.log("body: " + tempBody)
+            tempBody += finalTranscript.slice(finalTranscript.lastIndexOf("dear diary body") + "dear diary body".length + 1);
+            if (tempBody.includes("dear diary")) {
+                tempBody = tempBody.split("dear diary")[0];
+                data.body = tempBody
+                finalTranscript = finalTranscript.replace("dear diary body", "")
+            }
+            document.getElementById('body').innerHTML = tempBody;
         }
+
+        document.getElementById("title").innerHTML = data.title;
+        document.getElementById("body").innerHTML = data.body;
+
         if (finalTranscript.includes("dear diary publish")) {
             finalTranscript = "";
-            data.title = tempTitle;
-            data.body = tempBody;
             console.log(data)
+            history.push("/gallery");
+        }
+        if (finalTranscript.includes("dear diary cancel")) {
+            finalTranscript = "";
             history.push("/gallery");
         }
     }

@@ -6,7 +6,9 @@ class Compose extends Component {
         return (
             <div>
                 <p>compose</p>
+                <p id="interimTitle"></p>
                 <p id="title"></p>
+                <p id="interimBody"></p>
                 <p id="body"></p>
             </div>
         );
