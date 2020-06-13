@@ -1,7 +1,7 @@
 import React, { Component } from 'react';
 import "../styling/Login.css"
 
-class Login extends Component {
+class Register extends Component {
     render() {
         return(
             <div className="login-cont">
@@ -11,14 +11,16 @@ class Login extends Component {
                 </div>
                 <form>
                     <input type="text" name="username" placeholder="USERNAME"></input>
+                    <input type="text" name="username" placeholder="EMAIL"></input>
                     <input type="password" name="password" placeholder="PASSWORD"></input>
                 </form>
                 <div className="footer">
-                <button className="get-started-btn ui button" type="button">Sign In</button>
-                    <p className="note">Don't have an account? <a href="/register">Sign Up</a></p>
+                <button className="get-started-btn ui button" type="button">Sign Up</button>
+                    <p className="note">Already have an account? <a href="/login">Sign In</a></p>
                 </div>
             </div>
         );
     }
 }
-export default Login;
+
+export default Register;

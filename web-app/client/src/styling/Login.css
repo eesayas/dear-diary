@@ -1,0 +1,33 @@
+.login-cont{
+    width: 100%;
+    text-align: center;
+}
+
+form{
+    display: flex;
+    flex-direction: column;
+}
+
+form > input{
+    width: 40rem;
+    margin: 0.5rem auto;
+    font-size: 1.7rem;
+    padding: 1rem 2rem;
+    background: none;
+    border: none;
+    border: 3px solid white;
+    color: white !important;
+    outline: none;
+    font-weight: lighter !important;
+}
+
+form > input::placeholder{
+    color: white;
+}
+
+.subtitle{
+    margin: 0 0  5rem 0;
+}
+
+
+

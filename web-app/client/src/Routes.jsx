@@ -3,6 +3,8 @@ import history from "./history";
 import App from "./screens/App";
 import Gallery from "./screens/Gallery";
 import Compose from "./screens/Compose";
+import Login from "./screens/Login";
+import Register from "./screens/Register";
 import {
     Router,
     Switch,
@@ -17,6 +19,8 @@ class Routes extends Component {
                     <Route path="/" exact component={App} />
                     <Route path="/gallery" component={Gallery} />
                     <Route path="/compose" component={Compose} />
+                    <Route path="/login" component={Login} />
+                    <Route path="/register" component={Register} />
                 </Switch>
             </Router>
         );
