@@ -47,7 +47,7 @@ class Gallery extends Component {
                         <button className="ui button sign-out-btn" 
                             onClick={() => {
                                 auth.logout(() => {
-                                    const cookies = new Cookies;
+                                    const cookies = new Cookies();
                                     cookies.remove('deardiary');
                                     history.push("/login");
                                 });

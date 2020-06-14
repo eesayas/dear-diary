@@ -1,7 +1,7 @@
 import axios from 'axios'
 
 const api = axios.create({
-    baseURL: 'http://localhost:3000' //for dev only
+    baseURL: 'https://dear-diary-backend-280307.uc.r.appspot.com/' //for dev only
 });
 
 export const loginUser = credentials => api.post('/login', credentials);
