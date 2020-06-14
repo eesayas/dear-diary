@@ -1,17 +1,32 @@
 import React, { Component } from 'react';
 import history from "../history";
+import "../styling/App.css"
+import '../assets/semantic/buttons.css'
+import Cookies from 'universal-cookie';
+import auth from '../auth';
+
+//recover cookies
+const cookies = new Cookies();
+if(cookies.get('deardiary') && cookies.get('deardiary') !== ''){
+  auth.login(() =>{
+    auth.setUser(cookies.get('deardiary'));
+  });
+}
 
 class App extends Component {
   render() {
     return (
-      <div>
-        <p>Dear Diary</p>
-        <p>Dear Diary is a text-to-speech web application for hands free writing.</p>
-        <p>*Make sure to enable your microphone</p>
-        <p>Get Started</p>
-        <p>Say 'Dear Diary, Get Started’ to well...get started</p>
-        <button type="button" onClick={() => history.push("/gallery")}>Get Started</button>
-      </div >
+      <div className="home-page">
+        <div className="logo">Dear Diary</div>
+        <div className="banner-cont">
+          <p className="banner-title">Dear Diary is a text-to-speech web application for hands free writing.</p>
+          <p className="banner-subtitle">*Make sure to enable your microphone</p>
+        </div>
+        <div className="footer">
+          <button className="get-started-btn ui button" type="button" onClick={() => history.push("/gallery")}>Get Started</button>
+          <p className="note">Say 'Dear Diary, Get Started’ to well...get started</p>
+        </div>
+      </div>
     );
   }
 }
