@@ -85,8 +85,12 @@ module.exports = {
 
     //this will create the post and save it to the db
     async createPost(req, res){
-        let user = await User.findById(req.user.id);
-        let post = await Post.create(req.body);
+        let user = await User.findById(req.body.userId);
+        let body = {
+            title: req.body.title,
+            body: req.body.body
+        }
+        let post = await Post.create(body);
 
         user.posts.push(post);
         await user.save();
