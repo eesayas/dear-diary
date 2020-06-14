@@ -7,7 +7,7 @@ import auth from '../auth';
 
 //recover cookies
 const cookies = new Cookies();
-if(cookies.get('deardiary')){
+if(cookies.get('deardiary') && cookies.get('deardiary') !== ''){
   auth.login(() =>{
     auth.setUser(cookies.get('deardiary'));
   });

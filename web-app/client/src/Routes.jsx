@@ -21,7 +21,7 @@ class Routes extends Component {
                 <Switch>
                     <Route path="/" exact component={App} />
                     <ProtectedRoute path="/gallery" component={Gallery} />
-                    <Route path="/compose" component={Compose} />
+                    <ProtectedRoute path="/compose" component={Compose} />
                     <Route path="/login" component={Login} />
                     <Route path="/register" component={Register} />
                 </Switch>

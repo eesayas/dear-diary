@@ -35,6 +35,8 @@ class Login extends Component {
                     auth.setUser(res.data.user._id);
                     cookies.set('deardiary', res.data.user._id, { path: '/' });
                     history.push('/gallery');
+
+                    console.log(cookies.get('deardiary'));
                 });
             }
         }).catch(err => alert('The username or password is incorrect'));

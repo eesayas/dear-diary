@@ -4,6 +4,7 @@ import auth from '../auth';
 import '../styling/Gallery.css';
 import history from "../history";
 import moment from 'moment';
+import Cookies from 'universal-cookie';
 
 class Gallery extends Component {
     constructor(props){
@@ -43,7 +44,15 @@ class Gallery extends Component {
                 <div className="gallery-header">
                     <div className="logo header-logo">Dear Diary</div>
                     <div className="user-actions">
-                        <button className="ui button sign-out-btn">SIGN OUT</button>
+                        <button className="ui button sign-out-btn" 
+                            onClick={() => {
+                                auth.logout(() => {
+                                    const cookies = new Cookies;
+                                    cookies.remove('deardiary');
+                                    history.push("/login");
+                                });
+                            }}
+                        >SIGN OUT</button>
                     </div>
                 </div>
                 <div className="posts-cont">

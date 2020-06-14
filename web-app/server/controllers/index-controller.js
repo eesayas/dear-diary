@@ -55,7 +55,6 @@ module.exports = {
                     message: 'User login was unsuccessful'
                 });
             } else{
-                console.log('user logged in');
                 return res.status(200).json({
                     success: true,
                     message: 'User login was successful',
