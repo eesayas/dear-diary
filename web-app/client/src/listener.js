@@ -50,7 +50,7 @@ function transcribe(event) {
                 data.title = tempTitle
                 finalTranscript = finalTranscript.replace("dear diary title", "")
             }
-            document.getElementById('title').innerHTML = tempTitle;
+            document.getElementById('title').value = tempTitle;
         }
         if (finalTranscript.includes("dear diary body")) {
             tempBody += finalTranscript.slice(finalTranscript.lastIndexOf("dear diary body") + "dear diary body".length + 1);
@@ -59,11 +59,8 @@ function transcribe(event) {
                 data.body = tempBody
                 finalTranscript = finalTranscript.replace("dear diary body", "")
             }
-            document.getElementById('body').innerHTML = tempBody;
+            document.getElementById('body').value = tempBody;
         }
-
-        document.getElementById("title").innerHTML = data.title;
-        document.getElementById("body").innerHTML = data.body;
 
         if (finalTranscript.includes("dear diary publish")) {
             finalTranscript = "";
