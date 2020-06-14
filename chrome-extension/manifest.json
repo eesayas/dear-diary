@@ -1,0 +1,26 @@
+{
+    "manifest_version": 2,
+    "name": "Dear Diary",
+    "version": "0.1",
+    "description": "This extension redirects to Dear Diary website by voice command 'Dear Diary'",
+    "icons": {
+        "16": "icon16.png",
+        "48": "icon48.png",
+        "128": "icon128.png"
+    },
+    "background": {
+        "scripts": ["background.js"]
+    },
+    "content_scripts": [
+        {
+          "matches": [
+            "<all_urls>"
+          ],
+          "exclude_matches": ["http://localhost:8000/*"],
+          "js": ["content.js"]
+        }
+    ],
+    "browser_action": {
+        "default_icon": "icon128.png"
+    }
+}
