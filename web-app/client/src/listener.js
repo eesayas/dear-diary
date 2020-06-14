@@ -9,13 +9,6 @@ recognition.continous = true
 recognition.interimResults = true
 recognition.lang = 'en-US'
 
-let finalTranscript = "";
-let word = "";
-let data = {
-    title: "",
-    body: ""
-}
-
 //this will hold the value of the current command
 let currentCommand;
 
@@ -38,18 +31,18 @@ recognition.addEventListener('end', recognition.start)
 recognition.start();
 
 //when DOM is loaded check if the following elements exists
-document.addEventListener("DOMContentLoaded", function(event) { 
-    
+document.addEventListener("DOMContentLoaded", function (event) {
+
     //if exists
-    if(document.getElementById('title')){
+    if (document.getElementById('title')) {
 
         //listen for 'typed' input change and change value
-        document.getElementById('title').addEventListener('input', (e) =>{
+        document.getElementById('title').addEventListener('input', (e) => {
             title = e.target.value;
         })
     }
 
-    if(document.getElementById('body')){
+    if (document.getElementById('body')) {
         document.getElementById('body').addEventListener('input', (e) => {
             body = e.target.value;
         });
@@ -67,44 +60,36 @@ function transcribe(event) {
 
     // if word is final
     if (event.results[0].isFinal) {
-        
-        if(history.location.pathname === '/compose'){
+
+        if (history.location.pathname === '/compose') {
 
             //switcher of current command
-            if(transcript.includes(commands.TITLE)){
+            if (transcript.includes(commands.TITLE)) {
                 currentCommand = commands.TITLE;
-            } else if(transcript.includes(commands.BODY)){
+            } else if (transcript.includes(commands.BODY)) {
                 currentCommand = commands.BODY;
             }
-            
+
             //process words
-            if (currentCommand === commands.TITLE){
+            if (currentCommand === commands.TITLE) {
                 title += (transcript + ' ');
                 title = title.replace(/dear diary title/g, ""); //replace all instances of 'dear diary title
                 document.getElementById('title').value = title; //change the value
 
-            } else if(currentCommand === commands.BODY){
+            } else if (currentCommand === commands.BODY) {
                 body += (transcript + ' ');
                 body = body.replace(/dear diary body/g, "");
                 document.getElementById('body').value = body;
-            } 
-        
-        } else if(history.location.pathname === "/"){
-            // if(transcript.includes(''))
-        }
+            }
 
-
-    }
-
-    if (history.location.pathname === "/") {
-        if (finalTranscript.includes("dear diary get started")) {
-            finalTranscript = "";
-            history.push("/gallery");
-        }
-    } else if (history.location.pathname === "/gallery") {
-        if (finalTranscript.includes("dear diary compose")) {
-            finalTranscript = "";
-            history.push("/compose");
+        } else if (history.location.pathname === "/") {
+            if (transcript.includes(commands.GETSTARTED)) {
+                history.push("/gallery");
+            }
+        } else if (history.location.pathname === "/gallery") {
+            if (transcript.includes(commands.COMPOSE)) {
+                history.push("/compose");
+            }
         }
     }
 }
