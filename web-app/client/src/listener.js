@@ -47,15 +47,14 @@ function transcribe(event) {
         let tempTitle = "";
         let tempBody = "";
         var titlePrompt = "dear diary title";
-        var bodyPrompt = "dear diary body";
+        var bodyPrompt = "dear diary write body";
+        var publishPrompt = "dear diary publish";
+        var cancelPrompt = "dear diary cancel";
         if (finalTranscript.includes(titlePrompt)) {
-            finalTranscript = finalTranscript.slice(finalTranscript.indexOf(titlePrompt))
-            tempTitle += finalTranscript.slice(finalTranscript.indexOf(titlePrompt) + titlePrompt.length + 1);
             if (tempTitle.includes("dear diary")) {
                 tempTitle = tempTitle.split("dear diary")[0];
-                data.title = tempTitle
+                data.title = tempTitle;
                 finalTranscript = finalTranscript.replace(titlePrompt, "")
-                finalTranscript = finalTranscript.slice(finalTranscript.indexOf("dear diary "))
             }
             document.getElementById('title').value = tempTitle;
         }
@@ -69,12 +68,12 @@ function transcribe(event) {
             document.getElementById('body').value = tempBody;
         }
 
-        if (finalTranscript.includes("dear diary publish")) {
+        if (finalTranscript.includes(publishPrompt)) {
             finalTranscript = "";
             console.log(data)
             history.push("/gallery");
         }
-        if (finalTranscript.includes("dear diary cancel")) {
+        if (finalTranscript.includes(cancelPrompt)) {
             finalTranscript = "";
             history.push("/gallery");
         }

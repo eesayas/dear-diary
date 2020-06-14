@@ -23,8 +23,8 @@ class Compose extends Component {
             <div>
                 <div className="compose-body">
                     <form className="form">
-                        <textarea value={this.state.titleValue} onChange={this.handleChange} id="title" placeholder='Say "Dear Diary, Write Title" to make your title...' />
-                        <textarea value={this.state.bodyValue} onChange={this.handleChange} id="body" placeholder='Say "Dear Diary, Write Body" to make your title...' />
+                        <textarea value={this.state.titleValue} onChange={this.handleChange} id="title" placeholder='Say "Dear Diary, Title" to make your title...' />
+                        <textarea value={this.state.bodyValue} onChange={this.handleChange} id="body" placeholder='Say "Dear Diary, Body" to make your body...' />
                         <div className="foot">
                             <p>Say “Dear Diary, Publish” or “Dear Diary, Cancel”</p>
                             <div className="button-group">
