@@ -1,7 +1,7 @@
+![](https://cdn.discordapp.com/attachments/721030750669111381/721675007515951135/logo192.png)
+
 # dear-diary
 A speech-to-text web app built via MERN Stack with a chrome extension for hands-free entry
-
-![](https://cdn.discordapp.com/attachments/721030750669111381/721675007515951135/logo192.png)
 
 # How to install Dear Diary extension!
 1. Git clone this repo
