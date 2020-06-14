@@ -9,7 +9,7 @@ const User = require('./models/user-model');
 mongoose.set('useCreateIndex', true); //avoid deprecation
 
 const app = express();
-const port = 3000;
+const port = process.env.PORT || 3000;
 
 // Configure MongoDB
 mongoose.connect('mongodb+srv://deardiary:deardiary@deardiary-4hhbl.gcp.mongodb.net/posts?retryWrites=true&w=majority', { useNewUrlParser: true, useUnifiedTopology: true});
