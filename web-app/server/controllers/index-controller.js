@@ -75,7 +75,6 @@ module.exports = {
                     message: `Was not able to fetch the posts of ${req.user}`
                 });
             } else{
-                console.log(user.posts);
                 return res.status(200).json({
                     success: true,
                     message: `Fetching ${req.user}'s post successful`,

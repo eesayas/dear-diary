@@ -13,8 +13,29 @@ class Gallery extends Component {
 
     render() {
         return (
-            <div>
-                <p>gallery</p>
+            <div className="gallery-cont">
+                <div className="gallery-header">
+                    <div>Dear Diary</div>
+                    <div>
+                        <div>Hello, eesayas</div>
+                        <button>SIGN OUT</button>
+                    </div>
+                </div>
+                <div className="posts-cont">
+                    <div className="post-content">
+                        <div className="previews-cont">
+                            <div className="preview-title"></div>
+                            <div className="preview-subtitle"></div>
+                        </div>
+                        <div className="timestamp">
+                            
+                        </div>
+                    </div>
+                </div>
+                <div className="gallery-footer">
+                    <button>COMPOSE</button>
+                    <div>Say ‘Hey Diary, Compose’ to create a diary log</div>
+                </div>
             </div>
         );
     }

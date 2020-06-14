@@ -27,14 +27,14 @@ app.use(cors());
 app.use(bodyParser.json());
 
 // Configure passport and sessions
-app.use(session({
-	secret: "this is my secret hush hush",
-	resave: false,
-	saveUninitialized: false,
-}));
+// app.use(session({
+// 	secret: "this is my secret hush hush",
+// 	resave: false,
+// 	saveUninitialized: false,
+// }));
 
 app.use(passport.initialize());
-app.use(passport.session());
+// app.use(passport.session());
 
 passport.use(User.createStrategy());
 
