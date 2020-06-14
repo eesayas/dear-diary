@@ -10,6 +10,7 @@ recognition.interimResults = true
 recognition.lang = 'en-US'
 
 let finalTranscript = "";
+let word = "";
 let data = {
     title: "",
     body: ""
@@ -27,7 +28,9 @@ function transcribe(event) {
 
     if (event.results[0].isFinal) {
         finalTranscript += transcript + " ";
-        console.log(finalTranscript)
+        word = transcript;
+        console.log("final: " + finalTranscript)
+        console.log("word: " + word)
     }
 
     if (history.location.pathname === "/") {
@@ -43,21 +46,25 @@ function transcribe(event) {
     } else if (history.location.pathname === "/compose") {
         let tempTitle = "";
         let tempBody = "";
-        if (finalTranscript.includes("dear diary title")) {
-            tempTitle += finalTranscript.slice(finalTranscript.lastIndexOf("dear diary title") + "dear diary title".length + 1);
+        var titlePrompt = "dear diary title";
+        var bodyPrompt = "dear diary body";
+        if (finalTranscript.includes(titlePrompt)) {
+            finalTranscript = finalTranscript.slice(finalTranscript.indexOf(titlePrompt))
+            tempTitle += finalTranscript.slice(finalTranscript.indexOf(titlePrompt) + titlePrompt.length + 1);
             if (tempTitle.includes("dear diary")) {
                 tempTitle = tempTitle.split("dear diary")[0];
                 data.title = tempTitle
-                finalTranscript = finalTranscript.replace("dear diary title", "")
+                finalTranscript = finalTranscript.replace(titlePrompt, "")
+                finalTranscript = finalTranscript.slice(finalTranscript.indexOf("dear diary "))
             }
             document.getElementById('title').value = tempTitle;
         }
-        if (finalTranscript.includes("dear diary body")) {
-            tempBody += finalTranscript.slice(finalTranscript.lastIndexOf("dear diary body") + "dear diary body".length + 1);
+        if (finalTranscript.includes(bodyPrompt)) {
+            tempBody += finalTranscript.slice(finalTranscript.lastIndexOf(bodyPrompt) + bodyPrompt.length + 1);
             if (tempBody.includes("dear diary")) {
                 tempBody = tempBody.split("dear diary")[0];
                 data.body = tempBody
-                finalTranscript = finalTranscript.replace("dear diary body", "")
+                finalTranscript = finalTranscript.replace(bodyPrompt, "")
             }
             document.getElementById('body').value = tempBody;
         }
