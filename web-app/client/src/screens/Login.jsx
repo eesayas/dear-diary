@@ -2,6 +2,8 @@ import React, { Component } from 'react';
 import history from "../history";
 import "../styling/Login.css";
 import api from '../api';
+import auth from '../auth';
+import Cookies from 'universal-cookie';
 
 class Login extends Component {
     constructor(props){
@@ -28,7 +30,12 @@ class Login extends Component {
         const data = { username, password };
         await api.loginUser(data).then(res => {
             if(res.status === 200){
-                history.push('/gallery');
+                auth.login( () => {
+                    const cookies = new Cookies();
+                    auth.setUser(res.data.user._id);
+                    cookies.set('deardiary', res.data.user._id, { path: '/' });
+                    history.push('/gallery');
+                });
             }
         }).catch(err => alert('The username or password is incorrect'));
     }

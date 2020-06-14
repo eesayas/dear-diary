@@ -55,9 +55,11 @@ module.exports = {
                     message: 'User login was unsuccessful'
                 });
             } else{
+                console.log('user logged in');
                 return res.status(200).json({
                     success: true,
-                    message: 'User login was successful'
+                    message: 'User login was successful',
+                    user: req.user
                 });
             }
         });
@@ -65,13 +67,15 @@ module.exports = {
 
     //this will get all the posts of user
     async fetchPosts(req, res){
-        await User.findById(req.user.id).populate('posts').exec((err, user) => {
+        let userId = Object.keys(req.body)[0];
+        await User.findById(userId).populate('posts').exec((err, user) => {
             if(err){
                 return res.status(400).json({
                     success: false,
                     message: `Was not able to fetch the posts of ${req.user}`
                 });
             } else{
+                console.log(user.posts);
                 return res.status(200).json({
                     success: true,
                     message: `Fetching ${req.user}'s post successful`,

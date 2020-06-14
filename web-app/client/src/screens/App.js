@@ -2,6 +2,16 @@ import React, { Component } from 'react';
 import history from "../history";
 import "../styling/App.css"
 import '../assets/semantic/buttons.css'
+import Cookies from 'universal-cookie';
+import auth from '../auth';
+
+//recover cookies
+const cookies = new Cookies();
+if(cookies.get('deardiary')){
+  auth.login(() =>{
+    auth.setUser(cookies.get('deardiary'));
+  });
+}
 
 class App extends Component {
   render() {
