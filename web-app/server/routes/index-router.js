@@ -14,4 +14,8 @@ router.post('/create', createPost);
 //this route will fetch posts by user
 router.post('/posts', fetchPosts);
 
+router.get('/', (req, res) =>{
+    res.send('This is the Dear Diary backend');
+});
+
 module.exports = router;
