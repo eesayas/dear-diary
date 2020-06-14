@@ -15,7 +15,7 @@
     border-radius: 10px;
     padding: 20px;
     font-size: 20px;
-    font-family: PT Sans;
+    /* font-family: PT Sans; */
     margin: 10px;
     border: none;
     align-self: center;
@@ -34,8 +34,18 @@
 }
 
 .compose-body {
+    font-family: PTSansRegular !important;
+    margin: 5rem 0 0 0;
     display: flex;
     flex-direction: column;
+}
+
+textarea , button{
+    font-family: PTSansRegular !important;
+}
+
+button{
+    cursor: pointer;
 }
 
 .form {
@@ -81,6 +91,24 @@
     background-color: #43ABAE;
     border: 5px solid #43ABAE;
     color: white;
+}
+
+.compose-overall{
+    position: absolute;
+    /* border: 1px solid red; */
+    width: 100%;
+    height: 100%;
+    top: 0;
+}
+
+@font-face{
+    font-family: BlackJack;
+    src: url('../assets/fonts/blackjack.otf') format('opentype');
+}
+
+@font-face{
+    font-family: PTSansRegular;
+    src: url('../assets/fonts/PTSans-Regular.ttf') format('truetype');
 }
 
 @media screen and (max-width: 600px) {
