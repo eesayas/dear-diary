@@ -16,21 +16,84 @@ let data = {
     body: ""
 }
 
+//this will hold the value of the current command
+let currentCommand;
+
+//these are the list of commands 
+const commands = {
+    TITLE: 'dear diary title',
+    BODY: 'dear diary body',
+    PUBLISH: 'dear diary publish',
+    CANCEL: 'dear diary cancel',
+    GETSTARTED: 'dear diary get started',
+    COMPOSE: 'dear diary compose'
+}
+
+//this will hold the title and body of a post
+let title = '';
+let body = '';
+
 recognition.addEventListener('result', event => transcribe(event));
 recognition.addEventListener('end', recognition.start)
 recognition.start();
 
+//when DOM is loaded check if the following elements exists
+document.addEventListener("DOMContentLoaded", function(event) { 
+    
+    //if exists
+    if(document.getElementById('title')){
+
+        //listen for 'typed' input change and change value
+        document.getElementById('title').addEventListener('input', (e) =>{
+            title = e.target.value;
+        })
+    }
+
+    if(document.getElementById('body')){
+        document.getElementById('body').addEventListener('input', (e) => {
+            body = e.target.value;
+        });
+    }
+});
+
+//this will transcribe speech events
 function transcribe(event) {
+
+    // transcript <- what the user just said
     const transcript = Array.from(event.results)
         .map(result => result[0])
         .map(result => result.transcript)
         .join("")
 
+    // if word is final
     if (event.results[0].isFinal) {
-        finalTranscript += transcript + " ";
-        word = transcript;
-        console.log("final: " + finalTranscript)
-        console.log("word: " + word)
+        
+        if(history.location.pathname === '/compose'){
+
+            //switcher of current command
+            if(transcript.includes(commands.TITLE)){
+                currentCommand = commands.TITLE;
+            } else if(transcript.includes(commands.BODY)){
+                currentCommand = commands.BODY;
+            }
+            
+            //process words
+            if (currentCommand === commands.TITLE){
+                title += (transcript + ' ');
+                title = title.replace(/dear diary title/g, ""); //replace all instances of 'dear diary title
+                document.getElementById('title').value = title; //change the value
+
+            } else if(currentCommand === commands.BODY){
+                body += (transcript + ' ');
+                body = body.replace(/dear diary body/g, "");
+                document.getElementById('body').value = body;
+            } 
+        
+        } else if(history.location.pathname === "/"){
+            // if(transcript.includes(''))
+        }
+
+
     }
 
     if (history.location.pathname === "/") {
@@ -42,41 +105,6 @@ function transcribe(event) {
         if (finalTranscript.includes("dear diary compose")) {
             finalTranscript = "";
             history.push("/compose");
-        }
-    } else if (history.location.pathname === "/compose") {
-        let tempTitle = "";
-        let tempBody = "";
-        var titlePrompt = "dear diary title";
-        var bodyPrompt = "dear diary body";
-        if (finalTranscript.includes(titlePrompt)) {
-            finalTranscript = finalTranscript.slice(finalTranscript.indexOf(titlePrompt))
-            tempTitle += finalTranscript.slice(finalTranscript.indexOf(titlePrompt) + titlePrompt.length + 1);
-            if (tempTitle.includes("dear diary")) {
-                tempTitle = tempTitle.split("dear diary")[0];
-                data.title = tempTitle
-                finalTranscript = finalTranscript.replace(titlePrompt, "")
-                finalTranscript = finalTranscript.slice(finalTranscript.indexOf("dear diary "))
-            }
-            document.getElementById('title').value = tempTitle;
-        }
-        if (finalTranscript.includes(bodyPrompt)) {
-            tempBody += finalTranscript.slice(finalTranscript.lastIndexOf(bodyPrompt) + bodyPrompt.length + 1);
-            if (tempBody.includes("dear diary")) {
-                tempBody = tempBody.split("dear diary")[0];
-                data.body = tempBody
-                finalTranscript = finalTranscript.replace(bodyPrompt, "")
-            }
-            document.getElementById('body').value = tempBody;
-        }
-
-        if (finalTranscript.includes("dear diary publish")) {
-            finalTranscript = "";
-            console.log(data)
-            history.push("/gallery");
-        }
-        if (finalTranscript.includes("dear diary cancel")) {
-            finalTranscript = "";
-            history.push("/gallery");
         }
     }
 }
