@@ -64,6 +64,7 @@ const Index = (props) => {
         // new transcript
         resetTranscript();
       }
+
       // then set woke to false
     } else{
       setResult(transcript);
