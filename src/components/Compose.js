@@ -4,6 +4,7 @@ import UIfx from 'uifx';
 import alertAudio from '../sounds/wake.wav';
 import axios from 'axios';
 import moment from 'moment';
+import speechSynthesis from 'speech-synthesis';
 
 const Compose = (props) => {
     const alert = new UIfx(alertAudio);
@@ -44,6 +45,11 @@ const Compose = (props) => {
                     setParas(copyParas);
                     
                     
+                    break;
+
+                case "read_entry":
+                    let readThis = paras.join(" ");
+                    speechSynthesis(readThis, "Google UK English Female");
                     break;
                 case "save_entry":
                     break;
