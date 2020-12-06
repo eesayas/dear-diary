@@ -31,7 +31,7 @@ const Index = (props) => {
     const url = `https://api.wit.ai/message?v=${moment().format("YYYYMMDD")}&q=${query.split(" ").join("%20")}`;
     
     // make GET request
-    axios.get(url, { headers: { 'Authorization': 'Bearer H2VXHIZES4DBHZCDWUXB6BKOINMHC66Z' } })
+    axios.get(url, { headers: { 'Authorization': `${process.env.REACT_APP_HEADER}` } })
       .then(res => {  
 
         // if there are intents
