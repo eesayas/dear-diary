@@ -12,22 +12,24 @@ const Index = (props) => {
     "okay diary", "ok diary", "dear diary", "hey diary", "hello diary", "hi diary", "sup diary"
   ];
 
-  const [woke, setWoke] = useState(false);
   // configure commands
   const commands = wake.map(w => ({
-    command: w,
-    callback: ({ resetTranscript }) => { alert.play(); setWoke(true); resetTranscript() },
+    command: `${w} *`,
+    callback: (query) => { 
+      alert.play();
+      sendQuery(query);
+    },
   }));
 
-  const { transcript, finalTranscript, resetTranscript } = useSpeechRecognition({commands});
+  const { transcript, finalTranscript, resetTranscript, listening } = useSpeechRecognition({commands});
   const [result, setResult] = useState("");
+  const [mic, setMic] = useState(false);
 
   // this function will send query to witai
   const sendQuery = ( query ) => {
     // assemble url
     const url = `https://api.wit.ai/message?v=${moment().format("YYYYMMDD")}&q=${query.split(" ").join("%20")}`;
     
-
     // make GET request
     axios.get(url, { headers: { 'Authorization': 'Bearer H2VXHIZES4DBHZCDWUXB6BKOINMHC66Z' } })
       .then(res => {  
@@ -51,32 +53,19 @@ const Index = (props) => {
   }
   
   useEffect(() => {
-    if(woke){
-      // send next transcript to witai
-      if(finalTranscript.length){
-        // send to witai
-        sendQuery(finalTranscript);
-        // console.log(finalTranscript);
-
-        // set woke to false
-        setWoke(false);
-
-        // new transcript
-        resetTranscript();
-      }
-
-      // then set woke to false
-    } else{
-      setResult(transcript);
+    setResult(transcript);
+    
+    if(!listening && mic){
+      SpeechRecognition.startListening();
     }
-  }, [transcript, finalTranscript]);
+  }, [transcript, listening, mic]);
 
   return (
     <div className="h-100 d-flex align-items-center user-select-none">
       <div className="d-table mx-auto">
         <h1 style={{color: "#0d9ca4", fontFamily: "BlackJack", fontSize: "6rem"}} className="mx-auto">Dear Diary</h1>
         <p className="lead text-center">Say it. I write it.</p>
-        <div className="bg-light d-table p-3 rounded-circle mx-auto" role="button" onClick={() => {alert.play(); SpeechRecognition.startListening({continuous: true});}}>
+        <div className="bg-light d-table p-3 rounded-circle mx-auto" role="button" onClick={() => {alert.play(); setMic(true);}}>
           <MicIcon fontSize="large"/>
         </div>
         <br></br>

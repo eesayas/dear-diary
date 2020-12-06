@@ -11,8 +11,7 @@ const Compose = (props) => {
       "okay diary", "ok diary", "dear diary", "hey diary", "hello diary", "hi diary", "sup diary"
     ];
   
-    const [filters, setFilters] = useState([]);
-    const [copy, setCopy] = useState("");
+    const [paras, setParas] = useState([]);
 
     /**
     @desc This function will only sendQuery to witai
@@ -30,8 +29,21 @@ const Compose = (props) => {
             let intent_name = res.data.intents[0].name;
 
             switch(intent_name){
-                case "new_entry":
-                    props.history.push("/compose");
+                case "delete_words":
+                    let copyParas = paras;
+                    let edited = copyParas[copyParas.length - 1].split(" ");
+                    edited.pop();
+
+                    if(edited.length){
+                        copyParas[copyParas.length - 1] = edited.join(" ");
+                    } else{
+                        copyParas.pop();
+                    }
+
+                    console.log(copyParas);
+                    setParas(copyParas);
+                    
+                    
                     break;
                 case "save_entry":
                     break;
@@ -39,98 +51,44 @@ const Compose = (props) => {
                     console.log("no match");
                     break;
                 }
-            }
-
-            setResult(filterTranscript(copy));
-            
+            }            
         })
         .catch(err => console.log(err));
     }
 
-    /**
-     * @desc This function will add filter query to filter array
-     * @param command - what the user said
-     */
-    const addToFilter = (command, transcript) => {
-        let index = transcript.indexOf(command);
-
-        while(filters.map(f => f.index).includes(index)){
-            index = transcript.indexOf(command, index + 1);
-        }
-
-        let tempFilters = filters;
-        
-        tempFilters.push({
-            index, length: command.length
-        });
-
-        setFilters(tempFilters);
-    }
-
     // configure commands
     const commands = wake.map(w => ({
-      command: `${w} *`,
-      callback: (query) => { 
-          alert.play(); 
-          sendQuery(query);
-          addToFilter(`${w} ${query}`, copy);
-        },
+        command: `${w} *`,
+        callback: (query, {resetTranscript}) => { 
+            
+            resetTranscript(); // delete command phrase
+            sendQuery(query);
+            alert.play();
+        }
     }));
 
-    var { transcript } = useSpeechRecognition({commands});
+    var { transcript, listening } = useSpeechRecognition({commands});
     const [result, setResult] = useState("");
 
-    /**
-     * @desc This function will remove all command phrases from transcript
-     */
-    const filterTranscript = (transcript) => {
-        let tempFilters = filters;
-        let tempTranscript = "";
-
-        if(!tempFilters.length) return transcript;
-
-        // for all filter in filters filter out filter
-        tempFilters.forEach( (filter, index) => {
-
-            // iif first and only
-            if(index === 0 && tempFilters.length === 1){
-
-                tempTranscript += transcript.substring(0, filter.index - 1) + " " + transcript.substring(filter.index + filter.length + 1, transcript.length);
-
-            // if first    
-            } else if(index === 0 && tempFilters.length > 1){
-                
-                let chunk = transcript.substring(0, filter.index - 1) + " ";
-                console.log(`first ${chunk}`);
-
-                tempTranscript += chunk;
-            
-            // if last
-            } else if(index === tempFilters.length - 1){
-
-                let chunk = transcript.substring(tempFilters[index - 1].index + tempFilters[index - 1].length + 1, filter.index - 1) + " "
-                    + transcript.substring(filter.index + filter.length + 1, transcript.length);
-
-                tempTranscript += chunk;
-
-            // if mid
-            } else{
-                tempTranscript += transcript.substring(tempFilters[index - 1].index + tempFilters[index - 1].length + 1, filter.index - 1) + " ";
-            }
-
-        });
-
-        return tempTranscript;
-    }
-
     useEffect(() => {
-        setCopy(transcript);
-        setResult(filterTranscript(transcript));
-    }, [transcript]);
+        setResult(transcript);
+
+        if(!listening){
+            if(transcript.length){
+                let copyParas = paras;
+                copyParas.push(transcript);
+                console.log(copyParas);
+                setParas(copyParas);
+            }
+    
+            SpeechRecognition.startListening();
+        }
+    }, [transcript, listening]);
     
     return(
         <div className="h-100 w-100 border fixed-top" hidden={props.hidden}>
             <div className="alert alert-secondary border w-75 mx-auto mt-5" role="alert">
+                {paras.map((p, index) => (<p key={index}>{p}</p>))}
                 {result}
             </div>
         </div>
