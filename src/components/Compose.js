@@ -42,18 +42,32 @@ const Compose = (props) => {
                         copyParas.pop();
                     }
 
-                    console.log(copyParas);
                     setParas(copyParas);
-                    
-                    
                     break;
 
                 case "read_entry":
                     let readThis = paras.join(" ");
                     speechSynthesis(readThis, "Google UK English Female");
                     break;
+
                 case "save_entry":
+                    let element = document.createElement("a");
+                    let file = new Blob(paras.map(p => p + "\n"), {type: 'text/plain'}); // make blob but add new  line
+                    element.href = URL.createObjectURL(file);
+                    element.download = "dear-diary.txt";
+                    element.click();
                     break;
+                
+                case "delete_paragraph":
+                    let deleteParas = paras;
+                    deleteParas.pop();
+                    setParas(deleteParas);
+                    break;
+
+                case "start_over":
+                    setParas([]);
+                    break;
+
                 default:
                     console.log("no match");
                     break;
@@ -84,7 +98,6 @@ const Compose = (props) => {
             if(transcript.length){
                 let copyParas = paras;
                 copyParas.push(transcript);
-                console.log(copyParas);
                 setParas(copyParas);
             }
     
