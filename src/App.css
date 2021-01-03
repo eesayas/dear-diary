@@ -36,3 +36,15 @@
     transform: rotate(360deg);
   }
 }
+
+#logo{
+  color: #0d9ca4;
+  font-family: "BlackJack"; 
+  font-size: 6rem;
+}
+
+@media only screen and (max-width: 450px) {
+  #logo {
+    font-size: 4rem !important;
+  }
+}

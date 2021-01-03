@@ -5,6 +5,7 @@ import alertAudio from '../sounds/wake.wav';
 import MicIcon from '@material-ui/icons/Mic';
 import axios from 'axios';
 import moment from 'moment';
+import Info from "./Info";
 
 const Index = (props) => {
   const alert = new UIfx(alertAudio);
@@ -63,7 +64,7 @@ const Index = (props) => {
   return (
     <div className="h-100 d-flex align-items-center user-select-none">
       <div className="d-table mx-auto">
-        <h1 style={{color: "#0d9ca4", fontFamily: "BlackJack", fontSize: "6rem"}} className="mx-auto">Dear Diary</h1>
+        <h1 className="mx-auto text-center" id="logo">Dear Diary</h1>
         <p className="lead text-center">Say it. I write it.</p>
         <div className="bg-light d-table p-3 rounded-circle mx-auto" role="button" onClick={() => {alert.play(); setMic(true);}}>
           <MicIcon fontSize="large"/>
@@ -75,6 +76,7 @@ const Index = (props) => {
           {result}
         </div>
       </div>
+      <Info/>
     </div>
   );
 }

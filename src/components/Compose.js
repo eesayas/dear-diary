@@ -5,6 +5,7 @@ import alertAudio from '../sounds/wake.wav';
 import axios from 'axios';
 import moment from 'moment';
 import speechSynthesis from 'speech-synthesis';
+import Info from "./Info";
 
 const Compose = (props) => {
     const alert = new UIfx(alertAudio);
@@ -93,10 +94,12 @@ const Compose = (props) => {
     
     return(
         <div className="h-100 w-100 border fixed-top" hidden={props.hidden}>
-            <div className="alert alert-secondary border w-75 mx-auto mt-5" role="alert">
+            <h1 className="text-center mt-5 h3"><em>Say it. I write it.</em></h1>
+            <div className="alert alert-secondary border w-75 mx-auto mt-3" role="alert">
                 {paras.map((p, index) => (<p key={index}>{p}</p>))}
                 {result}
             </div>
+            <Info/>
         </div>
     );
 }
